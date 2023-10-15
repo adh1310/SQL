@@ -1,0 +1,24 @@
+#Introduction queries run on the Superstore database (http://sqlfiddle.com/#!5/ce3dc3/14227) 
+
+#Selects all data in the database "superstore" and orders it by price
+SELECT *
+FROM superstore
+ORDER BY price;
+
+#Selects the item with the max price in the database, listing the price and the item name
+SELECT MAX(price), item_name
+FROM superstore;
+
+#Selects the item with the lowest price in the database, listing the price and the item name
+SELECT MIN(price), item_name
+FROM superstore;
+
+#Aggregates the average price of all the items in the "Kitchen Supplies" category and rounds the result to 2 decimal places
+SELECT ROUND(AVG(price), 2), category
+FROM superstore
+WHERE category="Kitchen Supplies";
+
+#Counts how many items are in the "Kitchen Supplies" category and displays it along with the category name
+SELECT COUNT(category), category
+FROM superstore
+WHERE category="Kitchen Supplies";
