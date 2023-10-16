@@ -1,3 +1,5 @@
+#Introduction queries run on the Fortune 500 database (http://sqlfiddle.com/#!5/814e4c/14372) 
+
 #Select all data to see what is available
 SELECT *
 FROM fortune_companies;
