@@ -1,0 +1,69 @@
+#Select all data to see what is available
+SELECT *
+FROM fortune_companies;
+
+#How many companies have PTO days >= 20, maternity leave weeks >= 10, and offer healthcare?
+SELECT *
+FROM fortune_companies
+WHERE paid_time_off_days >= 20
+AND maternity_leave_weeks >=10
+AND healthcare_benefits = 1
+ORDER BY paid_time_off_days desc;
+
+#How much PTO does each industry offer on average?
+SELECT industry, ROUND(AVG(paid_time_off_days)) AS pto
+FROM fortune_companies
+GROUP BY industry
+ORDER BY pto desc;
+
+#Assign industries a label based on their average tenure
+SELECT industry,
+CASE 
+  WHEN avg_employee_tenure >= 6 THEN "6+ years"
+  WHEN avg_employee_tenure >= 4 THEN "4+ years"
+  WHEN avg_employee_tenure >= 2 THEN "2+ years"
+  ELSE "Less than 2 years" 
+END AS avg_tenure
+FROM fortune_companies
+GROUP BY industry
+ORDER BY avg_tenure desc;
+
+#How many companies offer healthcare benefits?
+SELECT healthcare_benefits, COUNT (*) AS num_rows
+FROM fortune_companies
+GROUP BY healthcare_benefits
+HAVING COUNT(*);
+
+#How many companies offer healthcare benefits and more than 20 days PTO?
+SELECT healthcare_benefits, COUNT (*) AS num_rows
+FROM fortune_companies
+WHERE paid_time_off_days >=20
+GROUP BY healthcare_benefits
+HAVING COUNT(*);
+
+#Assign all of the companies as "Great", "Acceptable" or "Poor" based on amount of maternity leave weeks
+SELECT company_name,
+CASE
+  WHEN maternity_leave_weeks >=10 THEN "Great"
+  WHEN maternity_leave_weeks >=8 THEN "Okay"
+  ELSE "Poor"
+END AS mother_friendliness
+FROM fortune_companies
+ORDER BY mother_friendliness;
+
+#Assign all tech industry companies as "Great", "Acceptable" or "Poor" based on amount of maternity leave weeks
+SELECT company_name,
+CASE
+  WHEN maternity_leave_weeks >=10 THEN "Great"
+  WHEN maternity_leave_weeks >=8 THEN "Okay"
+  ELSE "Poor"
+END AS mother_friendliness
+FROM fortune_companies
+WHERE industry="Technology"
+ORDER BY mother_friendliness;
+
+#Find which industries have an average revenue of greater than 200 billion and what is the average?
+SELECT industry, ROUND(AVG(revenue), 1) as avg_revenue_billions
+FROM fortune_companies
+GROUP BY industry
+HAVING avg_revenue_billions >=200;
